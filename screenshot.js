@@ -1,20 +1,9 @@
 const { parse } = require('url');
-const { timingSafeEqual } = require('crypto');
 const { getScreenshot } = require('./chromium');
 const { getInt, getUrlFromPath, isValidUrl } = require('./validator');
 
-const SECRET_KEY = process.env.SECRET_KEY;
-
-const compare = (a, b) => {
-    try {
-        return timingSafeEqual(Buffer.from(a, "utf8"), Buffer.from(b, "utf8"));
-    } catch {
-        return false;
-    }
-};
-
 module.exports = async function (req, res) {
-    if (!compare(req.query.key, SECRET_KEY)) {
+    if (req.query.key==="boop") {
         res.statusCode = 403;
         res.setHeader('Content-Type', 'text/html');
         res.end('<h1>Bad ?key=</h1><p>Permission denied</p>');
